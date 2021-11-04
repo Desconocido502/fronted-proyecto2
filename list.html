@@ -111,7 +111,7 @@
         //alert(`Eliminar Perfil de ${boton.value}`)
         let userName = boton.value;
         alert(userName)
-        fetch(`https://backend-proyecto2web.herokuapp.com/${userName}`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/usuarios/${userName}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
