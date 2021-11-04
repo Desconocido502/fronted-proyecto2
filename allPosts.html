@@ -19,7 +19,7 @@
     <script>
       function getAllPosts() {
         let publicaciones = [];
-        fetch("http://localhost:4000/allPosts", {
+        fetch("https://backend-proyecto2web.herokuapp.com/allPosts", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -109,7 +109,7 @@
         datosPrincipalPost = boton.value.split(" ");
         console.log(datosPrincipalPost[0] + "\n", datosPrincipalPost[1]);
         let id_publicacion = datosPrincipalPost[0];
-        fetch("http://localhost:4000/aumentoLikes", {
+        fetch("https://backend-proyecto2web.herokuapp.com/aumentoLikes", {
           method: "POST",
           body: JSON.stringify({
             id_publicacion: datosPrincipalPost[0],

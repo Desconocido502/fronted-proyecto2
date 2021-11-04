@@ -94,7 +94,7 @@
           console.log(element);
         });*/
 
-        fetch(`http://localhost:4000/admin/agregarUsers`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/admin/agregarUsers`, {
           method: "POST",
           body: JSON.stringify({ usuarios: contenidoaJsonUsuarios }),
           headers: {
@@ -125,7 +125,7 @@
         /*listaVideo.forEach((element) => {
           console.log(element);
         });*/
-        fetch(`http://localhost:4000/admin/agregarPostAUser`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/agregarPostAUser`, {
           method: "POST",
           body: JSON.stringify({
             image: listaImg,

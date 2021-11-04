@@ -48,7 +48,7 @@
       function cargarDatosUser() {
         //console.log(userName);
 
-        fetch(`http://localhost:4000/usuarios/${userName}`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/usuarios/${userName}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -72,7 +72,7 @@
       function cargarPublicacionesUsuario() {
         let publicaciones = [];
         console.log(userName);
-        fetch(`http://localhost:4000/user/${userName}`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/user/${userName}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

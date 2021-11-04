@@ -43,7 +43,7 @@
         var tabla = document.querySelector("#detalles");
         var cadena = "";
 
-        fetch("http://localhost:4000/admin/list", {
+        fetch("https://backend-proyecto2web.herokuapp.com/admin/list", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +111,7 @@
         //alert(`Eliminar Perfil de ${boton.value}`)
         let userName = boton.value;
         alert(userName)
-        fetch(`http://localhost:4000/usuarios/${userName}`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/${userName}`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

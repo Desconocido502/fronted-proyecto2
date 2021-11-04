@@ -67,7 +67,7 @@
 
       function top5Posts() {
         //Se manda a traer los top 5 post con mas me gusta
-        fetch("http://localhost:4000/admin/topPost", {
+        fetch("https://backend-proyecto2web.herokuapp.com/admin/topPost", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -92,7 +92,7 @@
 
       function top5Users() {
         //se manda a traer los top 5 usuarios con mas post
-        fetch("http://localhost:4000/admin/topUsers", {
+        fetch("https://backend-proyecto2web.herokuapp.com/topUsers", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -379,7 +379,7 @@
       var downloadPDFAllReport = document.getElementById("all-report");
       downloadPDFAllReport.addEventListener("click", () => {
         alert("Hola, estamos exportando los datos a pdf, atento!");
-        fetch("http://localhost:4000/admin/allDates", {
+        fetch("https://backend-proyecto2web.herokuapp.com/admin/allDates", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
