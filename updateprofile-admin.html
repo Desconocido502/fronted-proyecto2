@@ -73,7 +73,7 @@
           password: password,
         };
         console.log(user);
-        fetch(`https://backend-proyecto2web.herokuapp.com/${userNameB}`, {
+        fetch(`https://backend-proyecto2web.herokuapp.com/admin/updateUsuarios/${userNameB}`, {
           method: "PUT",
           body: JSON.stringify(user),
           headers: {
