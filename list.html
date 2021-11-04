@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Lista</title>
+  </head>
+  <body onload="obtenerUsuarios()">
+    <header>
+      <h1>Visualizar Usuarios</h1>
+    </header>
+    <br />
+    <div class="conteiner-table">
+      <table class="table table-dark table-sm">
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Gender</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="detalles"></tbody>
+      </table>
+    </div>
+    <button onclick="retornar()" class="retorno">Regresar</button>
+    <button onclick="Publicaciones()" class="post-g">Publicaciones</button>
+    <button onclick="reportes()" class="reports">Reportes</button>
+    <script>
+      function obtenerUsuarios() {
+        var tabla = document.querySelector("#detalles");
+        var cadena = "";
+
+        fetch("http://localhost:4000/admin/list", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("Ocurrio un error, ver la consola");
+          })
+          .then((response) => {
+            console.log(response);
+            response.forEach((element) => {
+              console.log(element);
+              var datosPersonales = []
+              datosPersonales = element.name.split(' ');
+              console.log('Nombre:',datosPersonales[0])
+              console.log('Apellido:',datosPersonales[1])
+              cadena += `
+                        <tr>
+                          <td> ${datosPersonales[0]} </td>
+                          <td> ${datosPersonales[1]} </td>
+                          <td> ${element.gender} </td>
+                          <td> ${element.userName} </td>
+                          <td> ${element.email} </td>
+                          <td> 
+                          <button value=${element.userName} onclick="verPerfil(this)" type="button">
+                            <img src="./img/eye-color.png" title="Ver Perfil">
+                          </button> 
+                          <button value=${element.userName} onclick="actualizarPerfil(this)" type="button">
+                            <img src="./img/refresh.png" title="Actualizar Perfil">
+                          </button> 
+                          <button value=${element.userName} onclick="borrarPerfil(this)" type="button">
+                            <img src="./img/delete.png" title="Eliminar Perfil">
+                          </button>
+                          <button value=${element.userName} onclick="verPublicacionesRankeadas(this)" type="button">
+                            <img src="./img/postage-stamp.png" title="Ver Ranking Publicaciones">
+                          </button>
+                          </td>
+                        </tr>
+              `;
+            });
+            tabla.innerHTML = cadena;
+          });
+      }
+
+      function verPerfil(boton) {
+        console.log(boton);
+        let userName = boton.value;
+        sessionStorage.setItem("buscar", userName);
+        console.log(userName);
+        alert(`Nombre del usuario: ${userName}`);
+        location.href = "perfil.html";
+      }
+      
+      function actualizarPerfil(boton) {
+        alert(`Actualizar Perfil de ${boton.value}`)
+        let userName = boton.value;
+        sessionStorage.setItem("buscar", userName);
+        location.href = './updateprofile-admin.html';
+      }
+      
+      function borrarPerfil(boton) {
+        //alert(`Eliminar Perfil de ${boton.value}`)
+        let userName = boton.value;
+        alert(userName)
+        fetch(`http://localhost:4000/usuarios/${userName}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res)=> res.json())
+          .catch((err) => {
+            console.error('Error:',err);
+            alert("Ocurrio un error, ver la consola");
+          })
+            .then((response) => {
+              console.log(response);
+              alert(response.Mensaje)
+              location.href = './list.html';
+            })
+      }
+      function verPublicacionesRankeadas(boton) {
+        alert(`Visualizar Publicaciones Rankeadas de ${boton.value}`)
+        let userName = boton.value;
+        sessionStorage.setItem("buscar", userName);
+        location.href = "./post_ranking.html";
+      }
+
+      function retornar() {
+        location.href = "./admin.html"
+      }
+
+      function Publicaciones() {
+        let admin = "administrador";
+        sessionStorage.setItem("buscar", admin);
+        location.href = "./allPosts.html"
+      }
+
+      function reportes() {
+        location.href = "./reportes.html";
+      }
+    </script>
+  </body>
+</html>

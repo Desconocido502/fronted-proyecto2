@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/styleAllPost.css" />
+    <title>Posts</title>
+  </head>
+  <body onload="getAllPosts()">
+    <header>
+      <h1 class="encabezado">Ublog Posts</h1>
+      <button type="button" id="retorno-post" onclick="regresar()">
+        Regresar
+      </button>
+    </header>
+    <div class="container" id="container-padre"></div>
+    <script>
+      function getAllPosts() {
+        let publicaciones = [];
+        fetch("http://localhost:4000/allPosts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("Ocurrio un error, ver la consola");
+          })
+          .then((response) => {
+            //alert(response.Mensaje);
+            //console.log(response);
+            publicaciones = response.allPost;
+            //console.log("Se presentan las publiaciones globales:");
+            /*response.allPost.forEach((element) => {
+              console.log(element);
+            });*/
+            cargarDatosDePosts(publicaciones);
+          });
+      }
+
+      function cargarDatosDePosts(publicaciones) {
+        contenedor = document.getElementById("container-padre");
+        cadena = "";
+        for (publicacion in publicaciones) {
+          if (publicaciones[publicacion].tipo == "image") {
+            cadena += `
+            <div class="container_box">
+              <div class="container_box-img">
+                <img
+                  class="img-v"
+                  src="${publicaciones[publicacion].url}"
+                  alt="${publicaciones[publicacion].categoria}"
+                />
+              </div>
+              <div class="container_box-h">
+                <button value="${publicaciones[publicacion].id_publicacion} ${publicaciones[publicacion].author}" onclick="contadorLikes(this)" type="button" id="boton-like">
+                  <img
+                  src="./img/like.png"
+                  alt="like"
+                  class="like-l"
+                  title="likes"
+                  />
+                </button> 
+                <p id="${publicaciones[publicacion].id_publicacion}">${publicaciones[publicacion].like}</p>
+                <p>${publicaciones[publicacion].author} - Hace 0 min</p>
+              </div>
+            </div>            
+            `;
+          } else if (publicaciones[publicacion].tipo == "video") {
+            cadena += `
+            <div class="container_box">
+              <div class="container_box-video">
+                <iframe
+                  class="video-v"
+                  src="${publicaciones[publicacion].url}"
+                  title="YouTube video player"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="container_box-h">
+                <button value="${publicaciones[publicacion].id_publicacion} ${publicaciones[publicacion].author}" onclick="contadorLikes(this)" type="button" id="boton-like">
+                  <img
+                  src="./img/like.png"
+                  alt="like"
+                  class="like-l"
+                  title="likes"
+                  />
+                </button> 
+                <p id="${publicaciones[publicacion].id_publicacion}">${publicaciones[publicacion].like}</p>
+                <p>${publicaciones[publicacion].author} - Hace 0 min</p>
+              </div>
+            </div>
+            `;
+          }
+        }
+        contenedor.innerHTML = cadena;
+      }
+
+      function contadorLikes(boton) {
+        console.log(boton.value);
+        var datosPrincipalPost = [];
+        datosPrincipalPost = boton.value.split(" ");
+        console.log(datosPrincipalPost[0] + "\n", datosPrincipalPost[1]);
+        let id_publicacion = datosPrincipalPost[0];
+        fetch("http://localhost:4000/aumentoLikes", {
+          method: "POST",
+          body: JSON.stringify({
+            id_publicacion: datosPrincipalPost[0],
+            userName: datosPrincipalPost[1],
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.log("Ocurrio un error");
+          })
+          .then((response) => {
+            console.log(response);
+            id_publicacion = parseInt(id_publicacion);
+            if (response.id_publicacion === id_publicacion) {
+              console.log("cantidad de likes traidos:", response.cantidadLike);
+              document.getElementById(id_publicacion).innerText =
+                response.cantidadLike;
+            } else {
+              console.log("Existe un eeror en algun lugar de tu codigo");
+            }
+          });
+      }
+
+      function regresar() {
+        let tipo_a_retornar = "";
+        tipo_a_retornar = sessionStorage.buscar.toString();
+        if (tipo_a_retornar === "administrador") {
+          location.href = "./list.html";
+        } else {
+          let userName = sessionStorage.buscar;
+          sessionStorage.setItem("buscar", userName);
+          location.href = "./user.html";
+        }
+      }
+    </script>
+  </body>
+</html>

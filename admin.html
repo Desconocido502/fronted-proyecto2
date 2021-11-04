@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Admin</title>
+  </head>
+  <body>
+    <header>
+      <h1>Administrador</h1>
+    </header>
+    <p class="cerrar-sesion"><a href="./login.html">cerrar sesion</a></p>
+    <div class="caja-contenedora animate-bg">
+      <div class="left-box">
+        <h2>Listar usuarios</h2>
+        <img src="./img/verified.png" alt="listar usuarios" class="list-img" />
+        <br />
+        <br />
+        <button class="boton-listar" onclick="visualizarUsuarios()">
+          Visualizar Usuarios
+          <img src="./img/list.png" alt="listar">
+        </button>
+      </div>
+      <div class="right-box">
+        <h2>Cargar usuarios/Publicaciones</h2>
+        <img src="./img/cargaDatos.png" alt="Cargar Datos" class="load-img" />
+        <button class="boton-cargar" onclick="cargarDatos()">
+          Cargar Datos
+          <img src="./img/cargar.png" alt="cargar" />
+        </button>
+      </div>
+    </div>
+    <script>
+      function visualizarUsuarios(){
+        location.href = './list.html';
+      }
+
+      function cargarDatos(){
+        location.href = './load.html';
+      }
+    </script>
+  </body>
+</html>

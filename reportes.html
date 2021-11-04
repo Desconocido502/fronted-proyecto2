@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/styleReports.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.js"
+      integrity="sha512-CWVDkca3f3uAWgDNVzW+W4XJbiC3CH84P2aWZXj+DqI6PNbTzXbl1dIzEHeNJpYSn4B6U8miSZb/hCws7FnUZA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/2.3.5/jspdf.plugin.autotable.js"></script>
+    <title>Reportes</title>
+  </head>
+  <body onload="lanzadera()">
+    <header>
+      <h1 class="title-reports">Reportes</h1>
+      <button type="button" id="retorno">Regresar</button>
+      <button type="button" id="all-report">Reporte Completo</button>
+    </header>
+    <div class="container">
+      <div class="container-left">
+        <h2 class="title-container">Top 5 Publicaciones con más me gusta</h2>
+        <div class="reportPage-p">
+          <div id="chartContainer" style="width: 100%; margin-top: 45px">
+            <canvas id="ChartPost"></canvas>
+          </div>
+        </div>
+        <p class="p-pdf-p"><a href="#" id="a-pdf-p">Download PDF</a></p>
+      </div>
+      <div class="container-right">
+        <h2 class="title-container">Top 5 Usuarios con más publicaciones</h2>
+        <div class="reportPage-u">
+          <div
+            id="chartContainerU"
+            style="width: 67%; margin-top: 5px; margin-left: 110px"
+          >
+            <canvas id="ChartUsers"></canvas>
+          </div>
+        </div>
+        <p class="p-pdf-u"><a href="#" id="a-pdf-u">Download PDF</a></p>
+      </div>
+    </div>
+    <script>
+      var descargarTopPost = document.getElementById("a-pdf-p");
+      var descargarTopUsuarios = document.getElementById("a-pdf-u");
+      var topPost = [];
+      var topUsers = [];
+      var chartColors = {
+        red: "rgb(255, 99, 132)",
+        orange: "rgb(255, 159, 64)",
+        yellow: "rgb(255, 205, 86)",
+        green: "rgb(75, 192, 192)",
+        blue: "rgb(54, 162, 235)",
+        purple: "rgb(153, 102, 255)",
+        grey: "rgb(231,233,237)",
+      };
+
+      function lanzadera() {
+        top5Posts();
+        top5Users();
+      }
+
+      function top5Posts() {
+        //Se manda a traer los top 5 post con mas me gusta
+        fetch("http://localhost:4000/admin/topPost", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("Ocurrio un error, ver la consola");
+          })
+          .then((response) => {
+            bandera = response.error;
+            if (bandera) {
+              alert(response.Mensaje);
+            } else {
+              topPost = response.top;
+              top_post_a_grafica();
+            }
+          });
+      }
+
+      function top5Users() {
+        //se manda a traer los top 5 usuarios con mas post
+        fetch("http://localhost:4000/admin/topUsers", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("Ocurrio un error, ver la consolax");
+          })
+          .then((response) => {
+            let bandera = false;
+            bandera = response.error;
+            if (bandera) {
+              alert(response.Mensaje);
+            } else {
+              topUsers = response.usuarios;
+              console.log(response)
+              top_publicaciones_a_grafica();
+            }
+          });
+      }
+
+      function top_post_a_grafica() {
+        let etiquetas = [];
+        let likes = [];
+        topPost.forEach((element, index) => {
+          etiquetas[index] = element.categoria;
+          likes[index] = element.like;
+          //console.log(etiquetas[index]);
+          //console.log(likes[index]);
+        });
+
+        let data = {
+          labels: etiquetas,
+          datasets: [
+            {
+              label: "Top 5 Publicaciones con mas likes",
+              backgroundColor: [
+                chartColors.red,
+                chartColors.purple,
+                chartColors.green,
+                chartColors.blue,
+                chartColors.yellow,
+              ],
+              data: likes,
+            },
+          ],
+        };
+
+        var barPosts = new Chart(document.getElementById("ChartPost"), {
+          type: "bar",
+          data: data,
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "Chart.js",
+            },
+            tooltips: {
+              mode: "index",
+              intersect: false,
+            },
+            legend: {
+              display: false,
+            },
+            scales: {
+              x: {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      function top_publicaciones_a_grafica() {
+        let etiquetas = [];
+        let publicaciones = [];
+        topUsers.forEach((element, index) => {
+          etiquetas[index] = element.userName;
+          publicaciones[index] = element.publicaciones;
+          //console.log(etiquetas[index]);
+          //console.log(publicaciones[index]);
+        });
+
+        let data = {
+          labels: etiquetas,
+          datasets: [
+            {
+              label: "Top 5 usuarios con mas publicaciones",
+              backgroundColor: [
+                chartColors.purple,
+                chartColors.yellow,
+                chartColors.red,
+                chartColors.blue,
+                chartColors.green,
+              ],
+              data: publicaciones,
+            },
+          ],
+        };
+
+        var pieUsers = new Chart(document.getElementById("ChartUsers"), {
+          type: "pie",
+          data: data,
+          options: {
+            responsive: true,
+            title: {
+              display: true,
+              text: "Chart.js",
+            },
+            tooltips: {
+              mode: "index",
+              intersect: false,
+            },
+            legend: {
+              display: false,
+            },
+            scales: {
+              x: {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      descargarTopPost.addEventListener("click", function () {
+        var rows1 = [];
+        var elementosRow = [];
+        topPost.forEach((element) => {
+          elementosRow = [
+            element.id_publicacion,
+            element.tipo,
+            element.date,
+            element.categoria,
+            element.author,
+            element.like,
+          ];
+          rows1.push(elementosRow);
+        });
+        console.log(rows1);
+
+        let pdf = new jsPDF({
+          orientation: "landscape",
+          unit: "px",
+          format: "a4",
+          compress: true,
+        });
+        const canvas = document.querySelectorAll("canvas");
+        let pageWidth = 380;
+        let pageHeight = 240;
+
+        pdf.setFontSize(22);
+        pdf.setFontType("bold");
+        pdf.text("Top 5 Publicaciones con más me gusta", 60, 20);
+        pdf.addImage(
+          canvas[0],
+          "PNG",
+          30,
+          150,
+          pageWidth,
+          pageHeight,
+          "Es una imagen",
+          "FAST"
+        );
+        var columns = [
+          "ID Publicacion",
+          "Type",
+          "Date",
+          "Category",
+          "Author",
+          "Cantidad likes",
+        ];
+        /*
+        var rows = [
+          [1, "Shaw", "Tanzania"],
+          [2, "Nelson", "Kazakhstan"],
+          [3, "Garcia", "Madagascar"],
+        ];
+        */
+        //console.log(rows);
+        pdf.autoTable(columns, rows1, {
+          startY: false,
+          theme: "grid",
+          //tableWidth: 'auto',
+          columnWidth: "wrap",
+          showHeader: "everyPage",
+          columnStyles: {
+            0: { columnWidth: "100" },
+          },
+          headerStyles: { theme: "grid", fontStyle: "bold" },
+          styles: {
+            overflow: "linebreak",
+            columnWidth: "100",
+            font: "arial",
+            fontSize: 10,
+            cellPadding: 4,
+            halign: "center",
+            valign: "middle",
+            overflowColumns: "linebreak",
+          },
+        });
+        pdf.save("TopPublicaciones.pdf");
+      });
+
+      descargarTopUsuarios.addEventListener("click", function () {
+        var rows2 = [];
+        elementosRow = [];
+        topUsers.forEach((element) => {
+          elementosRow = [
+            element.name,
+            element.userName,
+            element.gender,
+            element.email,
+            element.publicaciones,
+          ];
+          rows2.push(elementosRow);
+        });
+        console.log(rows2);
+
+        let pdf = new jsPDF({
+          orientation: "landscape",
+          unit: "px",
+          format: "a4",
+          compress: true,
+        });
+        const canvas = document.querySelectorAll("canvas");
+        let pageWidth = 260;
+        let pageHeight = 260;
+
+        pdf.setFontSize(22);
+        pdf.setFontType("bold");
+        pdf.text(20, 20, "Top 5 usuarios con más publicaciones");
+        pdf.addImage(
+          canvas[1],
+          "PNG",
+          30,
+          150,
+          pageWidth,
+          pageHeight,
+          "Es una imagen",
+          "FAST"
+        );
+        var columns = [
+          "Nombre",
+          "Nombre de usuario",
+          "genero",
+          "correo",
+          "Cantidad publicaciones",
+        ];
+        pdf.autoTable(columns, rows2, {
+          startY: false,
+          theme: "grid",
+          //tableWidth: 'auto',
+          columnWidth: "wrap",
+          showHeader: "everyPage",
+          columnStyles: {
+            0: { columnWidth: "100" },
+          },
+          headerStyles: { theme: "grid", fontStyle: "bold" },
+          styles: {
+            overflow: "linebreak",
+            columnWidth: "100",
+            font: "arial",
+            fontSize: 10,
+            cellPadding: 4,
+            halign: "center",
+            valign: "middle",
+            overflowColumns: "linebreak",
+          },
+        });
+
+        pdf.save("TopUsuarios.pdf");
+      });
+
+      var publicaciones = [];
+      var usuarios = [];
+      var downloadPDFAllReport = document.getElementById("all-report");
+      downloadPDFAllReport.addEventListener("click", () => {
+        alert("Hola, estamos exportando los datos a pdf, atento!");
+        fetch("http://localhost:4000/admin/allDates", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.error("Error:", err);
+            alert("Ocurrio un error, ver la consola");
+          })
+          .then((response) => {
+            console.log(response);
+            publicaciones = response.publicaciones;
+            usuarios = response.usuarios;
+            datos_a_pdf();
+          });
+      });
+
+      function datos_a_pdf() {
+        var rowsUser = [];
+        elementosRowUser = [];
+        usuarios.forEach((element) => {
+          elementosRowUser = [
+            element.name,
+            element.userName,
+            element.gender,
+            element.email,
+          ];
+          rowsUser.push(elementosRowUser);
+        });
+        console.log(rowsUser);
+
+        var rowsPost = [];
+        elementosRowPost = [];
+        publicaciones.forEach((element) => {
+          elementosRowPost = [
+            element.id_publicacion,
+            element.tipo,
+            element.date,
+            element.categoria,
+            element.like,
+            element.author,
+          ];
+          rowsPost.push(elementosRowPost);
+        });
+        console.log(rowsPost);
+
+        let pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "px",
+          format: "a4",
+          compress: true,
+        });
+        const canvas = document.querySelectorAll("canvas");
+        let pageWidth = 260;
+        let pageHeight = 260;
+
+        pdf.setFontSize(22);
+        pdf.setFontType("bold");
+        pdf.text(20, 20, "All report");
+        pdf.text(20, 50, "Usuarios");
+        var columnsUser = ["Nombre", "Nombre de usuario", "Genero", "Correo"];
+        pdf.autoTable(columnsUser, rowsUser, {
+          startY: 75,
+          theme: "grid",
+          //tableWidth: 'auto',
+          columnWidth: "wrap",
+          showHeader: "everyPage",
+          columnStyles: {
+            0: { columnWidth: "100" },
+          },
+          headerStyles: { theme: "grid", fontStyle: "bold" },
+          styles: {
+            overflow: "linebreak",
+            columnWidth: "100",
+            font: "arial",
+            fontSize: 10,
+            cellPadding: 4,
+            halign: "center",
+            valign: "middle",
+            overflowColumns: "linebreak",
+          },
+        });
+        pdf.addPage();
+        pdf.setFontSize(22);
+        pdf.setFontType("bold");
+        pdf.text(20, 20, "Publicaciones");
+        var columnsPost = [
+          "ID Publicacion",
+          "tipo",
+          "Fecha",
+          "Categoria",
+          "Cantidad likes",
+          "author",
+        ];
+        pdf.autoTable(columnsPost, rowsPost, {
+          startY: false,
+          theme: "grid",
+          //tableWidth: 'auto',
+          columnWidth: "wrap",
+          showHeader: "everyPage",
+          columnStyles: {
+            0: { columnWidth: "100" },
+          },
+          headerStyles: { theme: "grid", fontStyle: "bold" },
+          styles: {
+            overflow: "linebreak",
+            columnWidth: "100",
+            font: "arial",
+            fontSize: 10,
+            cellPadding: 4,
+            halign: "center",
+            valign: "middle",
+            overflowColumns: "linebreak",
+          },
+        });
+
+        pdf.save("AllReport.pdf");
+      }
+      var regresar = document.getElementById("retorno");
+      regresar.addEventListener("click", () => {
+        location.href = "./list.html";
+      });
+    </script>
+  </body>
+</html>

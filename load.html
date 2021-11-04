@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
+      crossorigin="anonymous"
+    />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Cargar</title>
+  </head>
+  <body>
+    <header>
+      <h1>Cargar Usuarios/Publicaciones</h1>
+    </header>
+    <p class="closed-sesion"><a href="./admin.html">Regresar</a></p>
+    <div class="conteiner-dates">
+      <div class="div-usuarios">
+        <label class="users">Usuarios</label>
+        <br />
+        <input type="file" id="fichero-u" />
+        <label for="fichero-u" class="square">Seleccionar Archivo</label>
+        <button type="button" class="cargar-users" onclick="cargarUsuarios()">
+          Cargar Usuarios
+        </button>
+      </div>
+      <div class="div-publicaciones">
+        <label class="posts">Publicaciones</label>
+        <br />
+        <input type="file" id="fichero-p" />
+        <label for="fichero-p" class="square">Seleccionar Archivo</label>
+        <button
+          type="button"
+          class="cargar-posts"
+          onclick="cargarPublicaciones()"
+        >
+          Cargar Publicaciones
+        </button>
+      </div>
+    </div>
+    <script>
+      var contenidoaJsonUsuarios = [];
+      var contenidoaJsonPublicaciones = [];
+      function abrirArchivoUsuarios(evento) {
+        let archivo = evento.target.files[0];
+        if (archivo) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            let contenido = e.target.result;
+            contenidoaJsonUsuarios = JSON.parse(contenido);
+            //console.log(JSON.parse(contenido));
+          };
+          reader.readAsText(archivo);
+        } else {
+          alert("No se ha seleccionado un archivo");
+        }
+      }
+      window.addEventListener("load", () => {
+        document
+          .getElementById("fichero-u")
+          .addEventListener("change", abrirArchivoUsuarios);
+      });
+
+      function abrirArchivoPublicaciones(evento) {
+        let archivo = evento.target.files[0];
+        if (archivo) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            let contenido = e.target.result;
+            contenidoaJsonPublicaciones = JSON.parse(contenido);
+            //console.log(JSON.parse(contenido));
+          };
+          reader.readAsText(archivo);
+        } else {
+          alert("No se ha seleccionado un archivo");
+        }
+      }
+      window.addEventListener("load", () => {
+        document
+          .getElementById("fichero-p")
+          .addEventListener("change", abrirArchivoPublicaciones);
+      });
+
+      function cargarUsuarios() {
+        alert("cargar usuarios listo");
+        /*
+        contenidoaJsonUsuarios.forEach((element) => {
+          console.log(element);
+        });*/
+
+        fetch(`http://localhost:4000/admin/agregarUsers`, {
+          method: "POST",
+          body: JSON.stringify({ usuarios: contenidoaJsonUsuarios }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.log("Ocurrio un error");
+          })
+          .then((response) => {
+            alert(response.Mensaje);
+            console.log(response);
+          });
+      }
+
+      function cargarPublicaciones() {
+        alert("cargar publicaciones listo");
+        //console.log(contenidoaJsonPublicaciones);
+        let listaImg = contenidoaJsonPublicaciones["images"];
+        /*console.log("Lista de imagenes");
+        listaImg.forEach((element) => {
+          console.log(element);
+        });*/
+        //console.log("Lista de videos");
+        let listaVideo = contenidoaJsonPublicaciones["videos"];
+        /*listaVideo.forEach((element) => {
+          console.log(element);
+        });*/
+        fetch(`http://localhost:4000/admin/agregarPostAUser`, {
+          method: "POST",
+          body: JSON.stringify({
+            image: listaImg,
+            video: listaVideo,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.log("Ocurrio un error");
+          })
+          .then((response) => {
+            alert(response.Mensaje);
+            location.href = "./load.html";
+          });
+      }
+    </script>
+  </body>
+</html>

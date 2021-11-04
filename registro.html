@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/estilos.css" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <h1>Registro</h1>
+    <div class="login">
+      <img src="img/idle/1.png" id="monster" alt="" />
+      <form class="formulario" id="form-login">
+        <label>Nombre</label>
+        <input
+          required="true"
+          type="text"
+          id="input-nombre"
+          placeholder="Nombre + Apellido"
+          autocomplete="off"
+        />
+        <label>Genero</label>
+        <input
+          required="true"
+          type="text"
+          id="input-genero"
+          placeholder="F o M"
+          autocomplete="off"
+        />
+        <label>Nombre de usuario</label>
+        <input
+          type="text"
+          id="input-username"
+          placeholder="desk7lap@..."
+          autocomplete="off"
+        />
+        <label>Correo</label>
+        <input
+          required="true"
+          type="email"
+          id="input-email"
+          placeholder="ejemplo34f@gmail.com"
+          autocomplete="off"
+        />
+        <label>Contraseña</label>
+        <input type="password" id="input-clave" placeholder="*******" />
+        <button onclick="register()" type="button">Login</button>
+      </form>
+    </div>
+    <a href="./login.html">Login</a>
+    <script>
+      function register() {
+        let error = false;
+        let name = document.querySelector("#input-nombre").value;
+        let gender = document.querySelector("#input-genero").value;
+        let userName = document.querySelector("#input-username").value;
+        let email = document.querySelector("#input-email").value;
+        let password = document.querySelector("#input-clave").value;
+
+        let newUser = {
+          name: name,
+          gender: gender,
+          userName: userName,
+          email: email,
+          password: password,
+        };
+        //console.log(newUser);
+        fetch("http://localhost:4000/registro", {
+          method: "POST",
+          body: JSON.stringify(newUser),
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .catch((err) => {
+            console.log("Ocurrio un error");
+          })
+          .then((response) => {
+            error = response.error;
+            if (error) {
+              alert(response.Mensaje);
+            } else if (error == null) {
+              alert(response.Mensaje);
+            } else {
+              document.getElementById("form-login").reset();
+              sessionStorage.setItem("buscar", userName);
+              location.href = "./user.html";
+            }
+          });
+      }
+    </script>
+    <script src="./js/javascript.js"></script>
+  </body>
+</html>

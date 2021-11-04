@@ -1,0 +1,155 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: whitesmoke;
+  text-align: center;
+}
+
+.title-reports {
+  color: crimson;
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.container {
+  margin: 10px auto;
+  width: 98%;
+  height: 550px;
+}
+
+.container-left {
+  float: left;
+  width: 50%;
+  height: 100%;
+  background-color: crimson;
+  border: 2px solid chartreuse;
+  border-radius: 10px 0 0 10px;
+}
+
+.container-right {
+  float: right;
+  width: 50%;
+  height: 100%;
+  background-color: crimson;
+  border: 2px solid chartreuse;
+  border-radius: 0 10px 10px 0;
+  text-align: center;
+}
+
+.title-container {
+  margin-top: 5px;
+  color: white;
+  font-size: bold;
+}
+
+.reportPage-p {
+  background-color: wheat;
+  margin: 25px auto;
+  width: 90%;
+  height: 75%;
+  border-radius: 5px;
+  border: 3px dashed gold;
+}
+
+.p-pdf-p {
+  background-color: black;
+  display: inline-block;
+  width: 150px;
+  height: 30px;
+  font-size: 22px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+#a-pdf-p {
+  color: white;
+  text-decoration: none;
+}
+
+#a-pdf-p:hover {
+  color: black;
+}
+.p-pdf-p:hover {
+  color: black;
+  background-color: #fff;
+  border: 1px solid #000;
+  transition: 0.2s;
+}
+
+.reportPage-u {
+  background-color: wheat;
+  margin: 25px auto;
+  width: 90%;
+  height: 75%;
+  border-radius: 5px;
+  border: 3px dashed gold;
+}
+
+.p-pdf-u {
+  background-color: black;
+  display: inline-block;
+  width: 150px;
+  height: 30px;
+  font-size: 22px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+}
+
+#a-pdf-u {
+  color: white;
+  text-decoration: none;
+}
+
+#a-pdf-u:hover {
+  color: black;
+}
+.p-pdf-u:hover {
+  color: black;
+  background-color: #fff;
+  border: 1px solid #000;
+  transition: 0.2s;
+}
+
+#all-report{
+  background-color: crimson;
+  color: white;
+  border: 1px solid #000;
+  border-radius: 5px;
+  display: inline-block;
+  margin-left: 1175px;
+  margin-top: -50px;
+  width: 150px;
+  height: 30px;
+  font-weight: bold;
+}
+
+#all-report:hover{
+  background-color: #000;
+  color: #fff;
+  border: 2px solid crimson;
+  transition: 0.2s;
+}
+
+#retorno{
+  background-color: crimson;
+  color: white;
+  border: 1px solid #000;
+  border-radius: 5px;
+  position: absolute;
+  margin-left: 5px;
+  margin-top: -50px;
+  width: 100px;
+  height: 30px;
+  font-weight: bold;
+}
+
+#retorno:hover{
+  background-color: #000;
+  color: #fff;
+  border: 2px solid crimson;
+  transition: 0.2s;
+}

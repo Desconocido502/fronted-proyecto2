@@ -1,0 +1,92 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Bowlby One SC", cursive;
+}
+
+body {
+  height: 100vh;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  color: #000;
+  width: 150px;
+  text-align: center;
+  margin-bottom: 510px;
+  margin-right: 1075px;
+  border: 2px solid #8f4790;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.login {
+  height: 650px;
+  position: absolute;
+}
+.formulario {
+  width: 400px;
+  position: absolute;
+  background-color: #fff;
+  border: 5px solid #8f4790;
+  border-radius: 10px;
+  padding: 10px 60px;
+  top: 210px;
+  left: 50%;
+  transform: translate(-50%);
+  text-align: center;
+}
+
+.formulario input,
+label,
+button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}
+
+.formulario input {
+  height: 30px;
+  border: 2px solid #8f4790;
+  border-radius: 10px;
+  padding: 0 8px;
+}
+
+.formulario button {
+  margin-top: 20px;
+  cursor: pointer;
+  border: none;
+  height: 40px;
+  background-color: #824283;
+  box-shadow: 1px 1px 2px #000;
+  color: #fff;
+}
+.formulario button:hover {
+  background-color: #8f4790;
+}
+
+a {
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  margin-top: 560px;
+  background-color: #fff;
+  border: 2px solid #8f4790;
+  transition: width 2s;
+}
+
+a:hover{
+  width: 75px;
+  height: 25px;
+  background: #824283;
+  color: #fff;
+  border: 2px solid yellow;
+}
+
+input{
+  text-align: center;
+}

@@ -1,0 +1,284 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: url("../img/fondoUsuario.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+header {
+  color: #fff;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.updateperfil {
+  margin-left: 25px;
+  text-align: center;
+  width: 175px;
+  height: 60px;
+  font-size: 25px;
+  border-radius: 15px;
+  background: rgb(0, 174, 255);
+}
+
+.updateperfil:hover {
+  width: 190px;
+  background-color: black;
+  transition: 0.5s;
+}
+
+.central {
+  /* background: #fff; */
+  width: 1260px;
+  height: 410px;
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.choosee-type {
+  top: 20px;
+  left: 25px;
+  position: absolute;
+}
+
+.url-w {
+  width: 750px;
+  height: 55px;
+  font-weight: 25px;
+  font-size: 20px;
+  border: 2px solid #000;
+}
+
+.write-url {
+  border: 3px solid #000;
+  border-radius: 7px;
+  background-color: rgb(0, 174, 255);
+  position: absolute;
+  top: 20px;
+  left: 400px;
+}
+
+#tipo {
+  width: 100px;
+  height: 35px;
+  text-align: center;
+  background-color: rgb(0, 174, 255);
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+}
+
+.write-category {
+  position: absolute;
+  left: 30px;
+  top: 240px;
+}
+
+.category-l {
+  border-top: 2px solid #000;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  background-color: rgb(0, 174, 255);
+  font-size: 20px;
+  color: #fff;
+}
+
+.url-c {
+  width: 1160px;
+  height: 55px;
+  font-weight: 25px;
+  font-size: 20px;
+  border: 2px solid #000;
+  border-radius: 7px;
+}
+
+.boton-post {
+  position: absolute;
+  top: 375px;
+  left: 1060px;
+}
+
+.boton {
+  width: 125px;
+  background-color: rgb(0, 174, 255);
+  color: #fff;
+  font-size: 25px;
+  border: 1px solid #000;
+  border-radius: 10px;
+}
+
+.boton:hover {
+  border: 1px solid rgb(0, 174, 255);
+  background: #000;
+  transition: 0.5s;
+}
+
+.update-title {
+  color: #fff;
+  text-align: center;
+}
+
+.update-center {
+  background: rgba(0, 174, 255, 0.65);
+  border-radius: 10px;
+  border: 2px solid #fff;
+  position: relative;
+  width: 480px;
+  height: 550px;
+  position: fixed;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form-title {
+  text-align: center;
+  color: #fff;
+  font-size: 25px;
+  font-weight: bold;
+  border-bottom: 1px solid #fff;
+}
+
+.nombre,
+.genero,
+.nombre-usuario,
+.correo,
+.contra {
+  font-family: serif;
+  font-size: 20px;
+  margin-left: 12px;
+  display: block;
+  width: 450px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.labels {
+  margin-top: 15px;
+  display: block;
+  color: #fff;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.boton-modificar {
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 15px;
+  width: 445px;
+  height: 35px;
+  color: #fff;
+  background-color: rgb(0, 174, 255);
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #000;
+}
+
+.boton-modificar:hover {
+  background-color: #000;
+  border: 1px solid #fff;
+  transition: 0.3s;
+}
+
+.cerrar-sesion-user {
+  background-color: rgb(0, 174, 255);
+  display: inline-block;
+  margin-top: 25px;
+  width: 150px;
+  height: 30px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  text-align: center;
+  margin-left: 1095px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.cerrar-sesion-user:hover {
+  background-color: #000;
+  border: 1px solid rgb(0, 174, 255);
+  transition: 0.2s;
+}
+
+#ver_publicaciones {
+  color: #fff;
+  background-color: rgb(0, 174, 255);
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 150px;
+  height: 30px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#ver_publicaciones:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid rgb(0, 174, 255);
+  transition: 0.2s;
+}
+
+#ver__mis_publicaciones {
+  color: #fff;
+  background-color: rgb(0, 174, 255);
+  position: absolute;
+  top: 5px;
+  right: 175px;
+  width: 250px;
+  height: 30px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#ver__mis_publicaciones:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid rgb(0, 174, 255);
+  transition: 0.2s;
+}
+
+.regresar_post{
+  color: #fff;
+  background-color: rgb(0, 174, 255);
+  position: absolute;
+  top: 5px;
+  left: 25px;
+  width: 110px;
+  height: 30px;
+  border: 2px solid #000;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.regresar_post:hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid rgb(0, 174, 255);
+  transition: 0.2s;
+}

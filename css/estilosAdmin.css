@@ -1,0 +1,83 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background: url('../img/fondoUpdateAdmin.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: blueviolet;
+  margin-top: 10px;
+}
+
+.update-title{
+  font-weight: bold;
+  text-align: center;
+}
+
+.update-center{
+  background-color:rgba(255, 235, 205, 0.75);
+  border-radius: 10px;
+  border: 3px solid blueviolet;
+  position: relative;
+  width: 480px;
+  height: 570px;
+  position: fixed;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.labels{
+  margin-top: 15px;
+  display: block;
+  color:blueviolet;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.form-title{
+  text-align: center;
+  color: blueviolet;
+  font-size: 25px;
+  font-weight: bold;
+  border-bottom: 1px solid blueviolet;
+}
+
+.nombre, .genero, .nombre-usuario, .correo, .contra{
+  font-family: serif;
+  font-size: 20px;
+  margin-left: 12px;
+  display:block;
+  width: 450px;
+  height: 40px;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.boton-modificar{
+  text-align: center;
+  margin-top: 10px;
+  margin-left: 15px;
+  width: 445px;
+  height: 35px;
+  color: #fff;
+  background-color:blueviolet;
+  font-size: 20px;
+  font-weight: bold;
+  border: 2px solid #000;
+  border-radius: 15px;
+  outline: 4px solid #ed217c;
+  outline-offset: 3px;
+}
+
+.boton-modificar:hover{
+  background-color: #000;
+  border: 1px solid #fff;
+  outline: 4px solid blueviolet;
+  transition: 0.3s;
+}

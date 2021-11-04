@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./img/Ublog.png" />
+    <link rel="stylesheet" href="./css/estilosUsuario.css" />
+    <title>usuario</title>
+  </head>
+  <body>
+    <header>
+      <h1>Nuevo Post</h1>
+      <button type="button" id="ver_publicaciones">Publicaciones</button>
+      <button type="button" id="ver__mis_publicaciones">Ver mis Publicaciones</button>
+    </header>
+    <div class="updateperfil">
+      <a href="./updateprofile.html">Modificar mi perfil</a>
+    </div>
+    <div class="central">
+      <div class="choosee-type">
+        <select name="tipo" id="tipo">
+          <option value="Tipo">Tipo</option>
+          <option value="image">Imagen</option>
+          <option value="Video">Video</option>
+        </select>
+      </div>
+      <div class="write-url">
+        <label for="url" style="color: aliceblue">URL</label>
+        <input
+          required
+          class="url-w"
+          type="text"
+          name="url"
+          id="url"
+          placeholder="Ingresa tu link para hacer un nuevo post"
+        />
+      </div>
+      <div class="write-category">
+        <label class="category-l" for="category">Categoria</label>
+        <br />
+        <input
+          required
+          class="url-c"
+          type="text"
+          name="category"
+          id="category"
+          placeholder="Escriba la categoria de su post"
+        />
+      </div>
+      <div class="boton-post">
+        <button onclick="publicar()" class="boton">Publicar</button>
+      </div>
+    </div>
+    <p class="cerrar-sesion-user"><a href="./login.html">Cerrar sesion</a></p>
+    <script>
+      function publicar() {
+        //alert("Me presionaste!!!");
+        let userName = sessionStorage.buscar;
+        console.log(userName);
+        const fecha = new Date();
+        console.log(fecha.toLocaleDateString());
+        let fechaPublicacion = fecha.toLocaleDateString();
+
+        let url = document.getElementById("url").value;
+        let category = document.getElementById("category").value;
+        let tipo = document.getElementById("tipo").value;
+
+        console.log(tipo);
+
+        const publicacion = {
+          url: url,
+          category: category,
+          tipo: tipo,
+          date: fechaPublicacion,
+          like: 0,
+        };
+
+        console.log(publicacion);
+
+        if (tipo === "Tipo") {
+          alert(
+            'Debe elegir entre imagen o video, no se puede seleccionar "tipo" por que es invalido!'
+          );
+        } else {
+          //alert("hacemos la peticion debida");
+          fetch(`http://localhost:4000/user/postPublicaciones/${userName}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(publicacion),
+          })
+            .then((res) => res.json())
+            .catch((err) => {
+              console.log(err);
+            })
+            .then(function (response) {
+              let userName = sessionStorage.buscar;
+              sessionStorage.setItem("buscar", userName);
+              location.href = "./allPosts.html";
+            });
+        }
+      }
+      var verPublicaciones = document.getElementById("ver_publicaciones");
+      verPublicaciones.addEventListener("click", () => {
+        let username = sessionStorage.buscar;
+        sessionStorage.setItem("buscar", username);
+        location.href = "./allPosts.html";
+      });
+
+      var misPublicaciones = document.getElementById('ver__mis_publicaciones');
+      misPublicaciones.addEventListener("click", () => {
+        let username = sessionStorage.buscar;
+        sessionStorage.setItem("buscar", username);
+        location.href = "./ver_perfil_user.html";
+      });
+    </script>
+  </body>
+</html>
