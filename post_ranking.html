@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,13 +30,16 @@
 
       function cargarDatosDePostsUser() {
         let userName = sessionStorage.buscar;
-        fetch(`https://backend-proyecto2web.herokuapp.com/userRanked/${userName}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
+        fetch(
+          `https://backend-proyecto2web.herokuapp.com/userRanked/${userName}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+            },
+          }
+        )
           .then((res) => res.json())
           .catch((err) => {
             console.error("Error:", err);
@@ -114,6 +116,14 @@
               </div>
               <div class="container_box-h">
                 <p>Autor: ${publicacion.author}</p>
+              </div>
+              <div class="container_box-h">
+                <button type="button" id="${publicacion.id_publicacion}">
+                  Modificar Publicación
+                </button>;
+                <button type="button" id="${publicacion.id_publicacion}">
+                  Eliminar
+                </button>;
               </div>
             </div>  
             `;
