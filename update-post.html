@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./img/Ublog.png" />
+  <title>update Post</title>
+</head>
+<body>
+  <div class="update-center">
+    <p class="form-title">Modificar Publicacion</p>
+    <label for="id" class="labels">Id publicacion</label>
+    <input class="nombre" type="text" name="name" id="id" />
+    <label for="tipo" class="labels">tipo</label>
+    <input class="genero" type="text" name="gender" id="tipo" />
+    <label for="date" class="labels">Fecha de publicacion</label>
+    <input class="nombre-usuario" type="text" name="username" id="date" />
+    <label for="categoria" class="labels">Categoria</label>
+    <input class="correo" type="email" name="email" id="categoria" />
+    <label for="likes" class="labels">Cantidad de likes</label>
+    <input class="contra" type="text" name="password" id="likes" />
+    <label for="author" class="labels">Autor</label>
+    <input class="contra" type="text" name="password" id="author" />
+    <button
+      type="button"
+      class="boton-modificar"
+      onclick="modificarPublicacion()"
+    >
+      Modificar
+    </button>
+  </div>
+  <script>
+    function modificarPublicacion() {
+      let id =  sessionStorage.id;
+      alert(id)
+      fetch(`https://backend-proyecto2web.herokuapp.com/admin/updatePost/${post}`, {
+        method: "PUT",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.error("Error:", err);
+          alert("Ocurrio un error, ver la consola");
+        })
+        .then((response) => {
+          console.log(response);
+          alert(response.Mensaje);
+          location.href = "./list.html";
+        });
+    }
+  </script>
+</body>
+</html>

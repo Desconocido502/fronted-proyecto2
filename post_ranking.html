@@ -147,7 +147,8 @@
 
       function modificarPublicacion(boton){
         alert(boton.value);
-
+        let id = boton.value;
+        sessionStorage.setItem("id", id);
       }
 
       function eliminarPublicacion(boton){
@@ -168,6 +169,7 @@
             .then((response) => {
               console.log(response);
               alert(response.Mensaje)
+              location.href = "./post_ranking.html";
             })
       }
     </script>
